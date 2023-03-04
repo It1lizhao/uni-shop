@@ -1,6 +1,7 @@
 <template>
   <view>
-    
+
+  </view>
   </view>
 </template>
 
@@ -8,9 +9,10 @@
   export default {
     data() {
       return {
-        
+
       };
-    }
+    },
+
   }
 </script>
 
