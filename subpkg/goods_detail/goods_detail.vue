@@ -1,5 +1,5 @@
 <template>
-  <view v-if="goods_info.goods_name">
+  <view v-if="goods_info.goods_name" class="goods-detail-container">
     <!-- 轮播图区域 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="(item, i) in goods_info.pics" :key="i">
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+  // 按需导入 mapMutations 这个辅助方法
+  import { mapGetters } from 'vuex'
   export default {
     data() {
       return {
@@ -52,7 +54,7 @@
         }, {
           icon: 'cart',
           text: '购物车',
-          info: 2
+          info: 0
         }],
         // 右侧按钮组的配置对象
         buttonGroup: [{
@@ -68,6 +70,25 @@
         ]
       }
     },
+    computed: {
+      // 把 m_cart 模块中名称为 total 的 getter 映射到当前页面中使用,计算当前购物车商品的总的数量
+      ...mapGetters('m_cart', ['total'])
+    },
+    watch: {
+      // 1. 监听 total 值的变化，通过第一个形参得到变化后的新值
+      total: {
+        handler(newVal) {
+          // 2. 通过数组的 find() 方法，找到购物车按钮的配置对象
+          const findResult = this.options.find((x) => x.text === '购物车')
+          if (findResult) {
+            // 3. 动态为购物车按钮的 info 属性赋值
+            findResult.info = newVal
+          }
+        },
+        immediate: true
+      }
+    },
+
     onLoad(options) {
       // 获取商品 Id
       const goods_id = options.goods_id
@@ -75,6 +96,8 @@
       this.getGoodsDetail(goods_id)
     },
     methods: {
+      // 把 m_cart 模块中的 addToCart 方法映射到当前页面使用
+      // ...mapMutations('m_cart', ['addToCart']),
       // 定义请求商品详情数据的方法
       async getGoodsDetail(goods_id) {
         const { data: res } = await uni.$http.get('/api/public/v1/goods/detail', { goods_id })
@@ -107,12 +130,37 @@
             url: '/pages/cart/cart'
           })
         }
+      },
+      // 右侧按钮的点击事件处理函数
+      buttonClick(e) {
+        // 1. 判断是否点击了 加入购物车 按钮
+        if (e.content.text === '加入购物车') {
+
+          // 2. 组织一个商品的信息对象
+          const goods = {
+            goods_id: this.goods_info.goods_id, // 商品的Id
+            goods_name: this.goods_info.goods_name, // 商品的名称
+            goods_price: this.goods_info.goods_price, // 商品的价格
+            goods_count: 1, // 商品的数量
+            goods_small_logo: this.goods_info.goods_small_logo, // 商品的图片
+            goods_state: true // 商品的勾选状态
+          }
+
+          // 3. 通过 this 调用映射过来的 addToCart 方法，把商品信息对象存储到购物车中
+          // this.addToCart(goods)
+          this.$store.commit('m_cart/addToCart', goods)
+
+        }
       }
     }
   }
 </script>
 
 <style lang="scss">
+  .goods-detail-container {
+    padding-bottom: 100rpx;
+  }
+
   swiper {
     height: 750rpx;
 
@@ -129,8 +177,8 @@
 
     .price {
       color: #c00000;
-      font-size: 18px;
-      margin: 10px 0;
+      font-size: 36rpx;
+      margin: 20rpx 0;
     }
 
     .goods-info-body {
@@ -138,27 +186,27 @@
       justify-content: space-between;
 
       .goods-name {
-        font-size: 13px;
-        padding-right: 10px;
+        font-size: 26rpx;
+        padding-right: 20rpx;
       }
 
       // 收藏区域
       .favi {
-        width: 120px;
-        font-size: 12px;
+        width: 240rpx;
+        font-size: 24rpx;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border-left: 1px solid #efefef;
+        border-left: 2rpx solid #efefef;
         color: gray;
       }
     }
 
     // 运费
     .yf {
-      margin: 10px 0;
-      font-size: 12px;
+      margin: 20rpx 0;
+      font-size: 24rpx;
       color: gray;
     }
   }
@@ -166,7 +214,7 @@
   .goods-detail-container {
     // 给页面外层的容器，添加 50px 的内padding，
     // 防止页面内容被底部的商品导航组件遮盖
-    padding-bottom: 50px;
+    padding-bottom: 100rpx;
   }
 
   .goods_nav {

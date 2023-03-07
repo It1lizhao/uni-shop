@@ -33,7 +33,12 @@
 </template>
 
 <script>
+  // 导入自己封装的 mixin 模块
+  import badgeMix from '@/mixins/tabbar-badge.js'
+
   export default {
+    // 将 badgeMix 混入到当前的页面中进行使用
+    mixins: [badgeMix],
     data() {
       return {
         // 窗口的可用高度 = 屏幕高度 - navigationBar高度 - tabBar 高度
@@ -95,13 +100,13 @@
     display: flex;
 
     .left-scroll-view {
-      width: 120px;
+      width: 240rpx;
 
       .left-scroll-view-item {
-        line-height: 60px;
+        line-height: 120rpx;
         background-color: #f7f7f7;
         text-align: center;
-        font-size: 12px;
+        font-size: 24rpx;
 
         // 激活项的样式
         &.active {
@@ -132,7 +137,7 @@
       height: 60rpx;
       width: 200rpx;
       line-height: 60rpx;
-      font-size: 12px;
+      font-size: 24rpx;
       font-weight: bold;
       text-align: center;
       margin: 30rpx auto;
@@ -156,7 +161,7 @@
         }
 
         text {
-          font-size: 12px;
+          font-size: 24rpx;
         }
       }
     }

@@ -57,7 +57,8 @@
       "checkSiteMap": false
     },
     "usingComponents": true,
-    "permission": {}
+    "permission": {},
+    "requiredPrivateInfos": ["chooseAddress"]
   },
   "vueVersion": "2"
 }

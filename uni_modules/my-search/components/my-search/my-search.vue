@@ -34,14 +34,14 @@
 <style lang='scss'>
   .my-search-container {
     /* background-color: #c00000; */
-    height: 50px;
-    padding: 0 10px;
+    height: 100rpx;
+    padding: 0 20rpx;
     display: flex;
     align-items: center;
   }
 
   .my-search-box {
-    height: 36px;
+    height: 72rpx;
     background-color: #ffffff;
     /* border-radius: 15px; */
     width: 100%;
@@ -50,8 +50,8 @@
     justify-content: center;
 
     .placeholder {
-      font-size: 15px;
-      margin-left: 5px;
+      font-size: 30rpx;
+      margin-left: 10rpx;
     }
   }
 </style>

@@ -134,12 +134,12 @@
   }
 
   .sugg-list {
-    padding: 0 5px;
+    padding: 0 10rpx;
 
     .sugg-item {
-      font-size: 12px;
-      padding: 13px 0;
-      border-bottom: 1px solid #efefef;
+      font-size: 24rpx;
+      padding: 26rpx 0;
+      border-bottom: 2rpx solid #efefef;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -151,21 +151,21 @@
         overflow: hidden;
         /* // 文本溢出后，使用 ... 代替 */
         text-overflow: ellipsis;
-        margin-right: 3px;
+        margin-right: 6rpx;
       }
     }
   }
 
   .history-box {
-    padding: 0 5px;
+    padding: 0 10rpx;
 
     .history-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 40px;
-      font-size: 13px;
-      border-bottom: 1px solid #efefef;
+      height: 80rpx;
+      font-size: 26rpx;
+      border-bottom: 2rpx solid #efefef;
     }
 
     .history-list {
@@ -173,8 +173,8 @@
       flex-wrap: wrap;
 
       .uni-tag {
-        margin-top: 5px;
-        margin-right: 5px;
+        margin-top: 10rpx;
+        margin-right: 10rpx;
       }
     }
   }

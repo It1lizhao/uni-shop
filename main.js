@@ -1,7 +1,7 @@
 // #ifndef VUE3
 import Vue from 'vue'
 import App from './App'
-
+import store from './store/store.js' // 1. 导入 store 的实例对象
 // 导入网络请求的包
 import { $http } from '@escook/request-miniprogram'
 // 挂载到uni顶级对象上
@@ -30,11 +30,11 @@ uni.$showMsg = function(title = '数据加载失败！', duration = 1500) {
 }
 
 Vue.config.productionTip = false
-
 App.mpType = 'app'
 
 const app = new Vue({
-  ...App
+  ...App,
+  store
 })
 app.$mount()
 // #endif
